@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "options.h"
 #include "extra.h"
@@ -22,9 +23,9 @@ int main(int argc, char **argv)
 		}
 	
 		char *firstline;
-		firstline = fgetline(fp);
+		firstline = fgetline(fp, 2);
 
-		printf("Buffer: \n%s\n", firstline);
+		printf("Line: %s\n", firstline);
 		
 		fclose(fp);
 		return 0;

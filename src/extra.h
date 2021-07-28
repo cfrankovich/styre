@@ -2,7 +2,7 @@
 #define HELPER_HEADER
 
 void parseargs(int *c);
-char* gfetline(FILE *fp);
+char* gfetline(FILE *fp, int line);
 
 void parseargs(int *c)
 {
@@ -27,15 +27,30 @@ void parseargs(int *c)
 
 }
 
-char* fgetline(FILE *fp)
+char* fgetline(FILE *fp, int line)
 {
 	int maxlen = 128;
 	char *buffer = (char*)malloc(sizeof(char) * maxlen);
 	char ch = getc(fp);
-	int count = 0;
+	int count, lcount;
+	count = lcount = 0;
 
-	while ((ch != '\n') && (ch != EOF))
+	while (ch != EOF)
 	{
+		if (ch == '\n')
+		{
+			lcount++;
+			if (lcount == line)
+			{
+				buffer[count] = '\0';
+				return buffer;
+			}
+			strcpy(buffer, "");
+			count = 0;
+			ch = getc(fp);
+			continue;
+		}
+
 		if (count == maxlen)
 		{
 			maxlen += 128;
@@ -44,7 +59,9 @@ char* fgetline(FILE *fp)
 		buffer[count] = ch;
 		count++;
 		ch = getc(fp);
+
 	}
+
 	buffer[count] = '\0';
 	return buffer;
 }
