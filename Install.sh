@@ -30,7 +30,7 @@ echo -e "${neu} Creating config file."
 if [ ! -e styrerc ]
 then
 	touch styrerc
-	echo "CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"-G\"\n" > styrerc
+	echo -e "CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"-G\"\n" > styrerc
 	echo -e "${pos} Config file created!"
 else
 	echo -e "${neg} Config file already found! Skipping process..."
