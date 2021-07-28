@@ -2,25 +2,54 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "include.h"
+
+#include "options.h"
+#include "extra.h"
+
+char* getconfigpath();
 
 int main(int argc, char **argv)
 {
-	int c;
-	while ((c = getopt(argc, argv, "LSEG")) != -1) { parseargs(&c); }
+	if (argc == 1) 
+	{ 
+		FILE *fp;
+		char *path;
+		path = getconfigpath();
+		if ((fp = fopen((char*)path, "r")) == NULL)
+		{
+			printf("Config file not found! Exiting.\n");
+			exit(1);
+		}
+	
+		char *firstline;
+		firstline = fgetline(fp);
 
+		printf("Buffer: \n%s\n", firstline);
+		
+		fclose(fp);
+		return 0;
+	}
+
+	int c;
+	while ((c = getopt(argc, argv, "LSEG")) != -1)
+	{ 
+		parseargs(&c);
+	}
+	
+	return 0;
+}
+
+char* getconfigpath()
+{
 	char *username;
 	username = (char*)malloc(50 * sizeof(char));
 	getlogin_r(username, sizeof(username));
-	
-	// path to the config and lists //
-	char path[255];
+
+	// this doesnt feel right //	
+	static char path[255];
 	strcpy(path, "/home/");
 	strcat(path, username);
-	// strcat(path, "/.styre");
-
-	printf("Path: %s\n", path);
-
-	return 0;
+	strcat(path, "/.styre/styrerc");
+	return path;
 }
 
