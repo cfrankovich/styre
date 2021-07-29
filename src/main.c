@@ -24,7 +24,14 @@ int main(int argc, char **argv)
 	
 		char* theline = ffindline(fp, "DEFCOM");
 		char* inside = getinsidequotes(theline);
-		printf("The Line: %s\n", inside);	
+		
+		// Issue #1 //
+		int i;
+		for (i = 0; i < strlen(inside); ++i)
+		{
+			int c = inside[i];
+			parseargs(&c);
+		}
 
 		fclose(fp);
 		return 0;
