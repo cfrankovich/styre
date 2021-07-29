@@ -15,5 +15,4 @@ and the rest should be taken care of by the shell script.
 ## Documentation
 Styre is still in development.
 
-<br></br>
-<img src="https://i.imgur.com/WdUQMfQ.gif" width="40%" height="40%"></img>
+<img src="https://i.imgur.com/WdUQMfQ.gif" width="50%" height="50%"></img>
