@@ -30,7 +30,7 @@ echo -e "${neu} Creating config file."
 if [ ! -e styrerc ]
 then
 	touch styrerc
-	echo -e "CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"-G\"\n" > styrerc
+	echo -e "CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"G\"\n" > styrerc
 	echo -e "${pos} Config file created!"
 else
 	echo -e "${neg} Config file already found! Skipping process..."
@@ -44,6 +44,10 @@ then
 else
 	echo -e "${neg} Lists file already found! Skipping process..."
 fi
+
+# Compile #
+
+# Move to bin #
 
 # Finish #
 echo -e "${pos} Installation complete! Please run ${bold}styre -h${reset} for help.\n" 
