@@ -2,7 +2,9 @@
 #define HELPER_HEADER
 
 void parseargs(int *c);
-char* gfetline(FILE *fp, int line);
+char* fgetline(FILE *fp, int line);
+char* ffindline(FILE *fp, char *text);
+char* getinsidequotes(char *text);
 
 void parseargs(int *c)
 {
@@ -42,7 +44,9 @@ char* fgetline(FILE *fp, int line)
 			lcount++;
 			if (lcount == line)
 			{
+				//printf("Returning!\nLC: %d\tL: %d\n", lcount, line);
 				buffer[count] = '\0';
+				fseek(fp, 0, SEEK_SET);
 				return buffer;
 			}
 			strcpy(buffer, "");
@@ -62,8 +66,40 @@ char* fgetline(FILE *fp, int line)
 
 	}
 
+	fseek(fp, 0, SEEK_SET);
 	buffer[count] = '\0';
-	return buffer;
+	return "!NOTFOUND!";
+}
+
+char* ffindline(FILE *fp, char *text)
+{
+	// Horrid Code fix l8tr //
+	char *line;
+	int i, k, m;
+	m = 0;
+	i = 1;
+	while (strcmp((line = fgetline(fp, i)), "!NOTFOUND!") != 0)
+	{
+		for (k = 0; k < strlen(line); ++k)
+		{
+			if (text[k] == line[k])
+			{
+				m++;
+				if (m == strlen(text))
+					return line;
+			}
+		}
+		i++;	
+
+	}
+	
+	return "!NOTFOUND!";
+}
+
+char* getinsidequotes(char *text)
+{
+	// Could be NULL //
+	return strchr(text, '"');	
 }
 
 #endif 

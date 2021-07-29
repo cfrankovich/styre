@@ -22,11 +22,10 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 	
-		char *firstline;
-		firstline = fgetline(fp, 2);
+		char* theline = ffindline(fp, "DEFCOM");
+		char* inside = getinsidequotes(theline);
+		printf("The Line: %s\n", inside);	
 
-		printf("Line: %s\n", firstline);
-		
 		fclose(fp);
 		return 0;
 	}
