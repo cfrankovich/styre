@@ -7,22 +7,13 @@
 #include "options.h"
 #include "extra.h"
 
-char* getconfigpath();
-
 int main(int argc, char **argv)
 {
 	if (argc == 1) 
 	{ 
-		FILE *fp;
-		char *path;
-		path = getconfigpath();
-		if ((fp = fopen((char*)path, "r")) == NULL)
-		{
-			printf("Config file not found! Exiting.\n");
-			exit(1);
-		}
-	
-		char* theline = ffindline(fp, "DEFCOM");
+		FILE *file;
+		file = getconfig();
+		char* theline = ffindline(file, "DEFCOM");
 		char* inside = getinsidequotes(theline);
 		
 		// Issue #1 //
@@ -33,7 +24,7 @@ int main(int argc, char **argv)
 			parseargs(&c);
 		}
 
-		fclose(fp);
+		fclose(file);
 		return 0;
 	}
 
@@ -44,19 +35,5 @@ int main(int argc, char **argv)
 	}
 	
 	return 0;
-}
-
-char* getconfigpath()
-{
-	char *username;
-	username = (char*)malloc(50 * sizeof(char));
-	getlogin_r(username, sizeof(username));
-
-	// this doesnt feel right //	
-	static char path[255];
-	strcpy(path, "/home/");
-	strcat(path, username);
-	strcat(path, "/.styre/styrerc");
-	return path;
 }
 

@@ -1,24 +1,45 @@
 #ifndef HELPER_HEADER
 #define HELPER_HEADER
 
+FILE* getconfig();
 void parseargs(int *c);
 char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text);
 char* getinsidequotes(char *text);
 
+FILE* getconfig()
+{
+	FILE *fp;
+	char *username, path[255]; 
+	username = (char*)malloc(50 * sizeof(char));	
+	getlogin_r(username, sizeof(username));
+	strcpy(path, "/home/");
+	strcat(path, username);
+	strcat(path, "/.styre/styrerc");
+	
+	if ((fp = fopen((char*)path, "r")) == NULL)
+	{
+		printf("Config file not found!\n");
+		exit(1);
+	}
+	return fp;
+
+}
+
 void parseargs(int *c)
 {
-	switch(*c) {
+	switch(*c) 
+	{
 		case 'L':
-			printf("Create list\n");
+			L();
 			break;
 
 		case 'S':
-			printf("Create subsection\n");
+			S();
 			break;
 
 		case 'E':
-			printf("Create entry\n");
+			E();
 			break;
 
 		case 'G':
@@ -44,7 +65,6 @@ char* fgetline(FILE *fp, int line)
 			lcount++;
 			if (lcount == line)
 			{
-				//printf("Returning!\nLC: %d\tL: %d\n", lcount, line);
 				buffer[count] = '\0';
 				fseek(fp, 0, SEEK_SET);
 				return buffer;
