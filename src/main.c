@@ -4,8 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "options.h"
 #include "extra.h"
+#include "options.h"
 
 int main(int argc, char **argv)
 {

@@ -7,6 +7,11 @@ char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text);
 char* getinsidequotes(char *text);
 
+void G();
+void L();
+void S();
+void E();
+
 FILE* getconfig()
 {
 	FILE *fp;
