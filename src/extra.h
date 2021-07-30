@@ -123,8 +123,8 @@ char* ffindline(FILE *fp, char *text)
 
 char* getinsidequotes(char *text)
 {
-	// Could be NULL //
-	return strchr(text, '"');	
+	// issue #2 //
+	return strchr(text, '"');
 }
 
 #endif 

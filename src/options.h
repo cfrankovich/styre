@@ -4,11 +4,19 @@
 void G() 
 { 
 	FILE *file;
+	char *quotes; 
+	int i;
 	file = getconfig();
-	char *cgoalline, *inside;
-	cgoalline = ffindline(file, "CGOAL");
-	inside = getinsidequotes(cgoalline);
+	quotes = getinsidequotes(ffindline(file, "CGOAL"));
 	fclose(file);
+
+	char inside[strlen(quotes)-1];
+	for (i = 0; i < strlen(quotes)-2; ++i)
+	{
+		inside[i] = quotes[i+1];
+	}
+	inside[strlen(quotes)-2] = '\0';
+
 	printf("Current Goal: %s\n", inside);
 }
 
