@@ -11,6 +11,8 @@ pos="[${green}${bold}+${reset}]"
 neg="[${red}${bold}-${reset}]"
 neu="[${blue}${bold}o${reset}]"
 
+SRCDIR=$(pwd)
+
 echo -e "\n${red}>${blue}>${green}> ${reset}Installing ${bold}Styre${reset} from ${bold}https://github.com/cfrankovich/styre${reset} ${green}<${blue}<${red}<${reset}\n"
 
 # Make the .styre directory #
@@ -37,12 +39,21 @@ else
 fi 
 
 echo -e "${neu} Creating lists file."
-if [ ! -e lists ]
+if [ ! -e lists.info ]
 then
-	touch lists
+	touch lists.info
 	echo -e "${pos} Created lists file!"
 else
 	echo -e "${neg} Lists file already found! Skipping process..."
+fi
+
+echo -e "${neu} Creating lists directory."
+if [ ! -d Lists ]
+then
+	mkdir Lists
+	echo -e "${pos} Created lists directory!"
+else
+	echo -e "${neg} Directory already exists! Skipping process..."
 fi
 
 # Compile #
