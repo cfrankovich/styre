@@ -1,28 +1,32 @@
 #ifndef HELPER_HEADER
 #define HELPER_HEADER
 
-FILE* getconfig();
+FILE* getstyrefile(char* filepath, char* mode);
 void parseargs(int *c);
 char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text);
 char* getinsidequotes(char *text);
+char* getusername();
 
 void G();
 void L();
 void S();
 void E();
 
-FILE* getconfig()
+FILE* getstyrefile(char* filepath, char* mode)
 {
 	FILE *fp;
 	char *username, path[255]; 
-	username = (char*)malloc(50 * sizeof(char));	
-	getlogin_r(username, sizeof(username));
+	username = getusername();
+	sprintf(path, "/home/%s/.styre/%s", username, filepath);
+	/*
 	strcpy(path, "/home/");
 	strcat(path, username);
-	strcat(path, "/.styre/styrerc");
-	
-	if ((fp = fopen((char*)path, "r")) == NULL)
+	strcat(path, "/.styre/");
+	strcat(path, filepath);
+	*/
+
+	if ((fp = fopen((char*)path, mode)) == NULL)
 	{
 		printf("Config file not found!\n");
 		exit(1);
@@ -125,6 +129,14 @@ char* getinsidequotes(char *text)
 {
 	// issue #2 //
 	return strchr(text, '"');
+}
+
+char* getusername()
+{
+	char *username;
+	username = (char*)malloc(50 * sizeof(char));
+	getlogin_r(username, sizeof(username));
+	return username;
 }
 
 #endif 

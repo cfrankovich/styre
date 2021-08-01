@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	if (argc == 1) 
 	{ 
 		FILE *file;
-		file = getconfig();
+		file = getstyrefile("styrerc", "r");
 		char* theline = ffindline(file, "DEFCOM");
 		char* inside = getinsidequotes(theline);
 		
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	}
 
 	int c;
-	while ((c = getopt(argc, argv, "LSEG")) != -1)
+	while ((c = getopt(argc, argv, "L:S:E:G")) != -1)
 	{ 
 		parseargs(&c);
 	}
