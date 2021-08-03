@@ -105,6 +105,8 @@ char* ffindline(FILE *fp, char *text)
 	{
 		for (k = 0; k < strlen(line); ++k)
 		{
+			if (k == 0 && line[k] == '#')
+				continue;
 			if (text[k] == line[k])
 			{
 				m++;
