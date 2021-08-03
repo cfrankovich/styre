@@ -39,9 +39,9 @@ else
 fi 
 
 echo -e "${neu} Creating lists file."
-if [ ! -e lists.info ]
+if [ ! -e lists ]
 then
-	touch lists.info
+	touch lists
 	echo -e "${pos} Created lists file!"
 else
 	echo -e "${neg} Lists file already found! Skipping process..."

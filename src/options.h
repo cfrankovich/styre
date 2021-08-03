@@ -38,10 +38,11 @@ void L()
 	// We have confirmed it doesn't so now create entry //
 	char path[260];
 	char *uname;
-	uname = getusername();	
-	sprintf(path, "/home/%s/.styre/Lists/%s.syr", uname, optarg);
 	FILE *newlistfile;
-	newlistfile = fopen(path, "w+");
+	uname = getusername();	
+	sprintf(path, "/home/%s/.styre/Lists/%s", uname, optarg);
+	newlistfile = fopen(path, "a");
+	fprintf(newlistfile, "SLATT\n");
 	fclose(newlistfile);
 
 	printf("Created list \"%s\"\n", optarg);
