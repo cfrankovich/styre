@@ -22,7 +22,7 @@ FILE* getstyrefile(char* filepath, char* mode)
 
 	if ((fp = fopen((char*)path, mode)) == NULL)
 	{
-		printf("Config file not found! Error [01]\n");
+		printf("File \"%s\" not found! Error [01]\n", path);
 		exit(1);
 	} 
 	

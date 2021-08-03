@@ -1,6 +1,12 @@
 #ifndef OPTION_HEADER
 #define OPTION_HEADER
 
+/*
+underscore - list name
+plus - subsection (can do multiple)
+minus - task 
+*/
+
 // List current goal //
 void G() 
 { 
@@ -24,25 +30,24 @@ void G()
 // Create a list //
 void L()
 {
-	// Find if optarg is anywhere in ~/.styre/lists //
 	FILE *file;
-	file = getstyrefile("lists", "r");
+	file = getstyrefile("lists", "a+");
 	if (strcmp("!NOTFOUND!", ffindline(file, optarg)) != 0)
 	{
 		printf("List already exists!\n");
 		fclose(file);
 		exit(1);
 	}
+	fprintf(file, "%s\n", optarg);
 	fclose(file);
 	
-	// We have confirmed it doesn't so now create entry //
 	char path[260];
 	char *uname;
 	FILE *newlistfile;
 	uname = getusername();	
 	sprintf(path, "/home/%s/.styre/Lists/%s", uname, optarg);
 	newlistfile = fopen(path, "a");
-	fprintf(newlistfile, "SLATT\n");
+	fprintf(newlistfile, "_%s\n", optarg);
 	fclose(newlistfile);
 
 	printf("Created list \"%s\"\n", optarg);
