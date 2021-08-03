@@ -19,20 +19,14 @@ FILE* getstyrefile(char* filepath, char* mode)
 	char *username, path[255]; 
 	username = getusername();
 	sprintf(path, "/home/%s/.styre/%s", username, filepath);
-	/*
-	strcpy(path, "/home/");
-	strcat(path, username);
-	strcat(path, "/.styre/");
-	strcat(path, filepath);
-	*/
 
 	if ((fp = fopen((char*)path, mode)) == NULL)
 	{
-		printf("Config file not found!\n");
+		printf("Config file not found! Error [01]\n");
 		exit(1);
-	}
-	return fp;
-
+	} 
+	
+	return fp; 
 }
 
 void parseargs(int *c)
@@ -133,9 +127,31 @@ char* getinsidequotes(char *text)
 
 char* getusername()
 {
-	char *username;
+	static char *username;
+	if (username != NULL)  
+	{
+		return username;
+	}
+
 	username = (char*)malloc(50 * sizeof(char));
-	getlogin_r(username, sizeof(username));
+	if (getlogin_r(username, sizeof(username)) != 0)
+	{
+		printf("Error fetching username! Error [02]\n");
+		char c;
+		printf("Would you like to enter the current user's name? [Y/n] : ");
+		c = getc(stdin);
+		if (c == 'y' || c == 'Y' || c == '\n')
+		{
+			printf("Username: ");	
+			scanf("%s", username);
+			return username;	
+		}
+		else
+		{
+			// mayb i should close file???? //
+			exit(1);
+		}
+	}
 	return username;
 }
 
