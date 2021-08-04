@@ -13,7 +13,7 @@ void G()
 	FILE *file;
 	char *quotes; 
 	int i;
-	file = getstyrefile("styrerc", "r");
+	file = getstyrefile("config", "r");
 	quotes = getinsidequotes(ffindline(file, "CGOAL"));
 	fclose(file);
 
@@ -54,7 +54,9 @@ void L()
 }
 
 // Create subsection in list //
-void S() { printf("S.\n"); }
+void S()
+{
+}
 
 // Create an entry in a list or subsection //
 void E() { printf("E.\n"); }

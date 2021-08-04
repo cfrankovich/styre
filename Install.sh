@@ -29,10 +29,10 @@ cd $STYREDIR
 
 # Create config and other files #
 echo -e "${neu} Creating config file."
-if [ ! -e styrerc ]
+if [ ! -e config ]
 then
-	touch styrerc
-	echo -e "DIR \"${STYREDIR}\"CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"G\"\n" > styrerc
+	touch config 
+	echo -e "DIR \"${STYREDIR}\"CGOAL \"\"\nNUMLIST \"0\"\nDEFCOM \"G\"\n" > config 
 	echo -e "${pos} Config file created!"
 else
 	echo -e "${neg} Config file already found! Skipping process..."

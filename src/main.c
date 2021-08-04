@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	if (argc == 1) 
 	{ 
 		FILE *file;
-		file = getstyrefile("styrerc", "r");
+		file = getstyrefile("config", "r");
 		char* theline = ffindline(file, "DEFCOM");
 		char* inside = getinsidequotes(theline);
 		
