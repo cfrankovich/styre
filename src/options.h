@@ -16,15 +16,7 @@ void G()
 	file = getstyrefile("config", "r");
 	quotes = getinsidequotes(ffindline(file, "CGOAL"));
 	fclose(file);
-
-	char inside[strlen(quotes)-1];
-	for (i = 0; i < strlen(quotes)-2; ++i)
-	{
-		inside[i] = quotes[i+1];
-	}
-	inside[strlen(quotes)-2] = '\0';
-
-	printf("Current Goal: %s\n", inside);
+	printf("Current Goal: %s\n", quotes);
 }
 
 // Create a list //

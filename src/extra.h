@@ -124,8 +124,7 @@ char* ffindline(FILE *fp, char *text)
 
 char* getinsidequotes(char *text)
 {
-	// issue #2 //
-	return strchr(text, '"');
+	return strtok(strchr(text, '"'), "\"");
 }
 
 char* getusername()

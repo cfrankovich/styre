@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 		
 		// Issue #1 //
 		int i;
-		for (i = 1; i < strlen(inside); ++i)
+		for (i = 0; i < strlen(inside); ++i)
 		{
 			int c = inside[i];
 			parseargs(&c);
