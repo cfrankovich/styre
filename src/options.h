@@ -8,7 +8,8 @@ minus - task
 */
 
 // List current goal //
-void G() 
+// Should be set //
+void G(char* arg) 
 { 
 	FILE *file;
 	char *quotes; 
@@ -20,38 +21,38 @@ void G()
 }
 
 // Create a list //
-void L()
+void L(char* arg)
 {
 	FILE *file;
 	file = getstyrefile("lists", "a+");
-	if (strcmp("!NOTFOUND!", ffindline(file, optarg)) != 0)
+	if (strcmp("!NOTFOUND!", ffindline(file, arg)) != 0)
 	{
 		printf("List already exists!\n");
 		fclose(file);
 		exit(1);
 	}
-	fprintf(file, "%s\n", optarg);
+	fprintf(file, "%s\n", arg);
 	fclose(file);
 	
 	char path[260];
 	char *uname;
 	FILE *newlistfile;
 	uname = getusername();	
-	sprintf(path, "/home/%s/.styre/Lists/%s", uname, optarg);
+	sprintf(path, "/home/%s/.styre/Lists/%s", uname, arg);
 	newlistfile = fopen(path, "a");
-	fprintf(newlistfile, "_%s\n", optarg);
+	fprintf(newlistfile, "_%s\n", arg);
 	fclose(newlistfile);
 
-	printf("Created list \"%s\"\n", optarg);
+	printf("Created list \"%s\"\n", arg);
 }
 
 // Create subsection in list //
-void S()
+void S(char* arg)
 {
 	char *listfilename, *subsecname;
 	// styre -S <list name>:<sub sec name>
-	listfilename = styresplit(optarg, 1);
-	subsecname = styresplit(optarg, 2);
+	listfilename = styresplit(arg, 1);
+	subsecname = styresplit(arg, 2);
 	if (subsecname == NULL)
 	{
 		printf("Please provide all arguments.\n");
@@ -77,6 +78,6 @@ void S()
 }
 
 // Create an entry in a list or subsection //
-void E() { printf("E.\n"); }
+void E(char* arg) { printf("E.\n"); }
 
 #endif 

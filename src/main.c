@@ -7,6 +7,8 @@
 #include "extra.h"
 #include "options.h"
 
+#define MAX_ARG_LEN 100
+
 int main(int argc, char **argv)
 {
 	if (argc == 1) 
@@ -15,13 +17,26 @@ int main(int argc, char **argv)
 		file = getstyrefile("config", "r");
 		char* theline = ffindline(file, "DEFCOM");
 		char* inside = getinsidequotes(theline);
-		
-		// Issue #1 //
-		int i;
-		for (i = 0; i < strlen(inside); ++i)
+
+		char *copy, *ptr;
+
+		copy = (char*)malloc(strlen(inside) * sizeof(char));
+		strcpy(copy, inside);
+		ptr = strtok(copy, " "); 
+
+		while (ptr != NULL)
 		{
-			int c = inside[i];
-			parseargs(&c);
+			if (ptr[0] == '-')
+			{
+				int c;
+				c = ptr[1];
+				ptr = strtok(NULL, " "); 
+				parseargs(&c, ptr); 
+			}
+			else
+			{
+				ptr = strtok(NULL, " ");
+			}
 		}
 
 		fclose(file);
@@ -29,9 +44,9 @@ int main(int argc, char **argv)
 	}
 
 	int c;
-	while ((c = getopt(argc, argv, "L:S:E:G")) != -1)
+	while ((c = getopt(argc, argv, "L:S:E:G?")) != -1)
 	{ 
-		parseargs(&c);
+		parseargs(&c, optarg);
 	}
 	
 	return 0;

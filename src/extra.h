@@ -2,17 +2,17 @@
 #define HELPER_HEADER
 
 FILE* getstyrefile(char* filepath, char* mode);
-void parseargs(int *c);
+void parseargs(int *c, char *arg);
 char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text);
 char* getinsidequotes(char *text);
 char* getusername();
 char* styresplit(char *text, int sec);
 
-void G();
-void L();
-void S();
-void E();
+void G(char* arg);
+void L(char* arg);
+void S(char* arg);
+void E(char* arg);
 
 FILE* getstyrefile(char* filepath, char* mode)
 {
@@ -30,24 +30,24 @@ FILE* getstyrefile(char* filepath, char* mode)
 	return fp; 
 }
 
-void parseargs(int *c)
+void parseargs(int *c, char* arg)
 {
 	switch(*c) 
 	{
 		case 'L':
-			L();
+			L(arg);
 			break;
 
 		case 'S':
-			S();
+			S(arg);
 			break;
 
 		case 'E':
-			E();
+			E(arg);
 			break;
 
 		case 'G':
-			G();
+			G(arg);
 			break;
 
 	}
