@@ -56,6 +56,32 @@ void L()
 // Create subsection in list //
 void S()
 {
+	char *listfilename, *subsecname;
+	// styre -S <list name>:<sub sec name>
+	listfilename = styresplit(optarg, 1);
+	subsecname = styresplit(optarg, 2);
+	if (subsecname == NULL)
+	{
+		printf("Please provide all arguments.\n");
+		exit(1);
+	}
+
+	char path[260];
+	char *uname;
+	FILE *listfile;
+
+	uname = getusername();
+	sprintf(path, "/home/%s/.styre/Lists/%s", uname, listfilename);
+	if (access(path, F_OK) == -1)
+	{
+		printf("List \"%s\" does not exist.\n", listfilename);
+		exit(1);
+	}
+	listfile = fopen(path, "a");
+	fprintf(listfile, "+%s\n", subsecname);
+	fclose(listfile);
+
+	printf("Created subsection \"%s\" in list \"%s\"\n", subsecname, listfilename);
 }
 
 // Create an entry in a list or subsection //

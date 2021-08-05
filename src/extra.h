@@ -7,6 +7,7 @@ char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text);
 char* getinsidequotes(char *text);
 char* getusername();
+char* styresplit(char *text, int sec);
 
 void G();
 void L();
@@ -155,6 +156,26 @@ char* getusername()
 		}
 	}
 	return username;
+}
+
+char* styresplit(char *text, int sec)
+{
+	char *temp; 
+	temp = (char*)malloc(strlen(text) * sizeof(char));
+	strcpy(temp, text);
+	char *ptr = strtok(temp, ":");
+	int iter;
+	iter = 0;
+	while (ptr != NULL)
+	{
+		++iter;
+		if (iter == sec)
+		{
+			return ptr;
+		}
+		ptr = strtok(NULL, ":");
+	}
+	return NULL;
 }
 
 #endif 
