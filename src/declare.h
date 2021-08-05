@@ -4,7 +4,7 @@
 FILE* getstyrefile(char* filepath, char* mode);
 void parseargs(int *c, char *arg);
 char* fgetline(FILE *fp, int line);
-char* ffindline(FILE *fp, char *text);
+char* ffindline(FILE *fp, char *text, int *linenumber);
 char* getinsidequotes(char *text);
 char* getusername();
 char* styresplit(char *text, int sec);

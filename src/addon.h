@@ -48,7 +48,8 @@ char* fgetline(FILE *fp, int line)
 	char ch = getc(fp);
 	int count, lcount;
 	count = lcount = 0;
-
+	
+	rewind(fp);
 	while (ch != EOF)
 	{
 		if (ch == '\n')
@@ -79,17 +80,17 @@ char* fgetline(FILE *fp, int line)
 
 	fseek(fp, 0, SEEK_SET);
 	buffer[count] = '\0';
-	return "!NOTFOUND!";
+	return NULL;
 }
 
-char* ffindline(FILE *fp, char *text)
+char* ffindline(FILE *fp, char *text, int *num)
 {
 	// Horrid Code fix l8tr //
 	char *line;
-	int i, k, m;
+	int k, m;
 	m = 0;
-	i = 1;
-	while (strcmp((line = fgetline(fp, i)), "!NOTFOUND!") != 0)
+	*num = 1;
+	while ((line = fgetline(fp, *num)) != NULL)
 	{
 		for (k = 0; k < strlen(line); ++k)
 		{
@@ -102,11 +103,11 @@ char* ffindline(FILE *fp, char *text)
 					return line;
 			}
 		}
-		i++;	
+		(*num)++;	
 
 	}
 	
-	return "!NOTFOUND!";
+	return NULL; 
 }
 
 char* getinsidequotes(char *text)

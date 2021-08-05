@@ -16,7 +16,8 @@ int main(int argc, char **argv)
 	{ 
 		FILE *file;
 		file = getstyrefile("config", "r");
-		char* theline = ffindline(file, "DEFCOM");
+		int temp;
+		char* theline = ffindline(file, "DEFCOM", &temp);
 		char* inside = getinsidequotes(theline);
 
 		char *copy, *ptr;
