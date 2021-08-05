@@ -4,7 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "extra.h"
+#include "declare.h"
+#include "addon.h"
 #include "options.h"
 
 #define MAX_ARG_LEN 100
