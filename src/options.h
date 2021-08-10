@@ -1,23 +1,42 @@
 #ifndef OPTION_HEADER
 #define OPTION_HEADER
 
-/*
-underscore - list name
-plus - subsection (can do multiple)
-minus - task 
-*/
-
-// List current goal //
-// Should be set //
+// Set current goal //
 void G(char* arg) 
 { 
-	FILE *file;
-	char *quotes; 
-	int i;
-	file = getstyrefile("config", "r");
-	quotes = getinsidequotes(ffindline(file, "CGOAL", &i));
-	fclose(file);
-	printf("Current Goal: %s\n", quotes);
+	FILE *configfile, *tempconfigfile;
+	configfile = getstyrefile("config", "r");
+	tempconfigfile = getstyrefile("config.temp", "a");
+	char *line;
+	int iter, goallinenum;
+	
+	ffindline(configfile, "CGOAL", &goallinenum);
+	iter = 1;
+	while ((line = fgetline(configfile, iter)) != NULL)
+	{
+		if (iter == goallinenum)
+		{
+			fprintf(tempconfigfile, "CGOAL \"%s\"\n", arg);
+		}
+		else
+		{
+			fprintf(tempconfigfile, "%s\n", line);	
+		}
+		++iter;
+	}
+
+	fclose(configfile);
+	char temppath[260], path[260];
+	sprintf(path, "/home/%s/.styre/config", getusername());
+	sprintf(temppath, "/home/%s/.styre/config.temp", getusername());
+	if ((rename(temppath, path)) != 0)
+	{
+		printf("Error copying temp file.\n");
+		fclose(tempconfigfile);
+		exit(1);
+	}
+	fclose(tempconfigfile);
+	printf("Changed current goal.\n");
 }
 
 // Create a list //
@@ -152,6 +171,17 @@ void E(char* arg)
 	}
 
 	fclose(listfile);
+}
+
+void g(char* arg) 
+{ 
+	FILE *file;
+	char *quotes; 
+	int i;
+	file = getstyrefile("config", "r");
+	quotes = getinsidequotes(ffindline(file, "CGOAL", &i));
+	fclose(file);
+	printf("Current Goal: %s\n", quotes);
 }
 
 #endif 
