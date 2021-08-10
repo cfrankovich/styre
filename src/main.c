@@ -9,7 +9,7 @@
 #include "options.h"
 
 #define MAX_ARG_LEN 100
-#define OPT_LIST "L:S:E:G?"
+#define OPT_LIST "L:S:E:G:g?"
 
 int main(int argc, char **argv)
 {

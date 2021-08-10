@@ -37,6 +37,10 @@ void parseargs(int *c, char* arg)
 			G(arg);
 			break;
 		
+		case 'g':
+			g();
+			break;
+
 		case '?':
 			fprintf(stderr, "Unkown option '%c'\n", optopt);
 			break;
