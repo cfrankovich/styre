@@ -1,12 +1,12 @@
 #ifndef HELPER_HEADER
 #define HELPER_HEADER
 
-FILE* getstyrefile(char* filepath, char* mode)
+FILE* getstyrefile(char* filename, char* mode)
 {
 	FILE *fp;
 	char *username, path[255]; 
 	username = getusername();
-	sprintf(path, "/home/%s/.styre/%s", username, filepath);
+	sprintf(path, "/home/%s/.styre/%s", username, filename);
 
 	if ((fp = fopen((char*)path, mode)) == NULL)
 	{
@@ -36,6 +36,10 @@ void parseargs(int *c, char* arg)
 		case 'G':
 			G(arg);
 			break;
+		
+		case '?':
+			fprintf(stderr, "Unkown option '%c'\n", optopt);
+			break;
 
 	}
 
@@ -44,7 +48,7 @@ void parseargs(int *c, char* arg)
 char* fgetline(FILE *fp, int line)
 {
 	int maxlen = 128;
-	char *buffer = (char*)malloc(sizeof(char) * maxlen);
+	char *buffer = malloc(sizeof(char) * maxlen);
 	char ch = getc(fp);
 	int count, lcount;
 	count = lcount = 0;
@@ -85,28 +89,27 @@ char* fgetline(FILE *fp, int line)
 
 char* ffindline(FILE *fp, char *text, int *num)
 {
-	// Horrid Code fix l8tr //
-	char *line;
-	int k, m;
+	int k, m, len;
+	len = strlen(text);
+	char *line, comp[len+1];
 	m = 0;
 	*num = 1;
 	while ((line = fgetline(fp, *num)) != NULL)
 	{
-		for (k = 0; k < strlen(line); ++k)
+		for (k = 0; k < strlen(text); ++k)
 		{
-			if (k == 0 && line[k] == '#')
-				continue;
-			if (text[k] == line[k])
-			{
-				m++;
-				if (m == strlen(text))
-					return line;
-			}
+			comp[k] = line[k];
 		}
+		comp[k] = '\0';
+
+		if ((strcmp(comp, text)) == 0)
+		{
+			return line;
+		}
+
 		(*num)++;	
 
 	}
-	
 	return NULL; 
 }
 
@@ -123,7 +126,7 @@ char* getusername()
 		return username;
 	}
 
-	username = (char*)malloc(50 * sizeof(char));
+	username = malloc(50 * sizeof(char));
 	if (getlogin_r(username, sizeof(username)) != 0)
 	{
 		printf("Error fetching username! Error [02]\n");
@@ -138,7 +141,6 @@ char* getusername()
 		}
 		else
 		{
-			// mayb i should close file???? //
 			exit(1);
 		}
 	}
@@ -148,11 +150,11 @@ char* getusername()
 char* styresplit(char *text, int sec)
 {
 	char *temp; 
-	temp = (char*)malloc(strlen(text) * sizeof(char));
+	temp = malloc(strlen(text) * sizeof(char));
 	strcpy(temp, text);
 	char *ptr = strtok(temp, ":");
 	int iter;
-	iter = 0;
+     	iter = 0;
 	while (ptr != NULL)
 	{
 		++iter;

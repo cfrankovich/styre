@@ -9,6 +9,7 @@
 #include "options.h"
 
 #define MAX_ARG_LEN 100
+#define OPT_LIST "L:S:E:G?"
 
 int main(int argc, char **argv)
 {
@@ -17,12 +18,11 @@ int main(int argc, char **argv)
 		FILE *file;
 		file = getstyrefile("config", "r");
 		int temp;
-		char* theline = ffindline(file, "DEFCOM", &temp);
-		char* inside = getinsidequotes(theline);
+		char* inside = getinsidequotes(ffindline(file, "DEFCOM", &temp));
+		fclose(file);
 
 		char *copy, *ptr;
-
-		copy = (char*)malloc(strlen(inside) * sizeof(char));
+		copy = malloc(strlen(inside) * sizeof(char));
 		strcpy(copy, inside);
 		ptr = strtok(copy, " "); 
 
@@ -41,12 +41,11 @@ int main(int argc, char **argv)
 			}
 		}
 
-		fclose(file);
 		return 0;
 	}
 
 	int c;
-	while ((c = getopt(argc, argv, "L:S:E:G?")) != -1)
+	while ((c = getopt(argc, argv, OPT_LIST)) != -1)
 	{ 
 		parseargs(&c, optarg);
 	}
