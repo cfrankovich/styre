@@ -199,6 +199,29 @@ void l()
 		printf("%s\n", line);		
 		++iter;
 	}
+	fclose(listfile);
+}
+
+// List subsecs of a list //
+void s(char *arg)
+{
+	FILE *listfile;
+	char path[260], *line;
+	int iter;
+	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), arg);
+	listfile = fopen(path, "r");
+
+	iter = 1;	
+	printf("_%s\n", arg);
+	while ((line = fgetline(listfile, iter)) != NULL)
+	{
+		if (line[0] == '+')
+		{
+			printf("%s\n", line);
+		}
+		++iter;
+	}
+	fclose(listfile);
 }
 
 #endif 
