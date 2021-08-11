@@ -182,7 +182,10 @@ void g(char* arg)
 	file = getstyrefile("config", "r");
 	quotes = getinsidequotes(ffindline(file, "CGOAL", &i));
 	fclose(file);
-	printf("%s\n", quotes);
+	if (quotes == NULL)
+		printf("Could not find \"CGOAL\" in config.\n");
+	else
+		printf("%s\n", quotes);
 }
 
 // List out all lists //
@@ -208,8 +211,13 @@ void s(char *arg)
 	FILE *listfile;
 	char path[260], *line;
 	int iter;
+
 	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), arg);
-	listfile = fopen(path, "r");
+	if((listfile = fopen(path, "r")) == NULL)
+	{
+		printf("List \"%s\" does not exist.\n", arg);
+		exit(1);
+	}
 
 	iter = 1;	
 	printf("_%s\n", arg);
@@ -222,6 +230,84 @@ void s(char *arg)
 		++iter;
 	}
 	fclose(listfile);
+}
+
+// List subsecs of a list //
+void e(char* arg)
+{
+	char *line, *subname, path[260];
+	subname = styresplit(arg, 2);
+	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), styresplit(arg, 1));
+
+	FILE *listfile;
+	if((listfile = fopen(path, "r")) == NULL)
+	{
+		printf("List \"%s\" does not exist.\n", styresplit(arg, 1));
+		exit(1);
+	}
+
+	bool issub;
+	issub = subname != NULL;
+	if (issub)
+	{
+		e2(listfile, subname);  
+		return;
+	}
+	
+	int iter;
+	iter = 2;	
+	printf("\n");
+	bool inside;
+	while ((line = fgetline(listfile, iter)) != NULL)
+	{
+		if (line[0] != '\0')
+		{
+			if (inside)
+				printf("  %s\n", line);
+			else
+				printf("%s\n", line);
+		}
+		else
+		{
+			inside = false;
+		}
+
+		if (line[0] == '+') 
+			inside = true;
+		++iter;
+	}
+	printf("\n");
+	fclose(listfile);
+}
+
+void e2(FILE *fp, char *subname)
+{
+	int iter;
+	iter = 2;
+	printf("\n");
+	bool inside;
+	inside = false;
+	char subwplus[strlen(subname)+1], *line;
+	sprintf(subwplus, "+%s", subname);
+	while ((line = fgetline(fp, iter)) != NULL)
+	{
+		if (strcmp(subwplus, line) == 0)
+		{
+			inside = true; 
+			++iter;
+			printf("%s\n", line);
+			continue;
+		}
+		
+		if (inside) 
+		{
+			printf("  %s\n", line);
+			inside = line[0] != '\0';
+		}
+
+		++iter;
+	}
+	fclose(fp);
 }
 
 #endif 
