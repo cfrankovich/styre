@@ -9,6 +9,7 @@ char* getinsidequotes(char *text);
 char* getusername();
 char* styresplit(char *text, int sec);
 
+//void X(char *arg);
 void D(char *arg);
 void e(char *arg);
 void G(char* arg);
