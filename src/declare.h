@@ -14,5 +14,6 @@ void L(char* arg);
 void S(char* arg);
 void E(char* arg);
 void g();
+void l();
 
 #endif 

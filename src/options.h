@@ -173,6 +173,7 @@ void E(char* arg)
 	fclose(listfile);
 }
 
+// List current goal //
 void g(char* arg) 
 { 
 	FILE *file;
@@ -181,7 +182,23 @@ void g(char* arg)
 	file = getstyrefile("config", "r");
 	quotes = getinsidequotes(ffindline(file, "CGOAL", &i));
 	fclose(file);
-	printf("Current Goal: %s\n", quotes);
+	printf("%s\n", quotes);
+}
+
+// List out all lists //
+void l()
+{
+	FILE *listfile;
+	listfile = getstyrefile("lists", "r");
+	int iter;
+	iter = 1;
+	char *line;
+	
+	while ((line = fgetline(listfile, iter)) != NULL)
+	{
+		printf("%s\n", line);		
+		++iter;
+	}
 }
 
 #endif 
