@@ -40,6 +40,10 @@ void parseargs(int *c, char* arg)
 		case 'D':
 			D(arg);
 			break;
+		
+		case 'X':
+			X(arg);
+			break;
 
 		case 'g':
 			g();

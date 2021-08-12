@@ -1,6 +1,64 @@
 #ifndef OPTION_HEADER
 #define OPTION_HEADER
 
+// Remove Something //
+void X(char *arg)
+{
+	char *list, *sub, *entry, *line, path[260];
+	list = styresplit(arg, 1);
+	sub = styresplit(arg, 2);
+	entry = styresplit(arg, 3);
+	
+	// 1 - list | 2 - sub | 3 - entry //
+	int cse, iter;
+	cse = (sub != NULL) ? ((entry != NULL) ? 3 : 2) : 1;
+
+	FILE *listfile;
+	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), list);
+	if ((listfile = fopen(path, "r")) == NULL)
+	{
+		printf("List \"%s\" does not exist\n", list);
+		exit(1);
+	}
+
+	iter = 1;
+	switch (cse)
+	{
+		case 1:
+			FILE *lists, *liststemp;
+			lists = getstyrefile("lists", "r"); 
+			liststemp = getstyrefile("lists.tmp", "a");
+			// first character of file duped //
+			while ((line = fgetline(lists, iter)) != NULL)
+			{
+				if (strcmp(line, list) != 0)		
+					fprintf(liststemp, "%s\n", line);
+				++iter;
+			}
+			fclose(lists);
+			
+			if (remove(path) != 0)
+			{
+				printf("Error deleting list\n");
+				fclose(liststemp);
+				exit(1);
+			}
+
+			sprintf(path, "/home/%s/.styre/lists", getusername());
+			char temppath[260];
+			sprintf(temppath, "/home/%s/.styre/lists.tmp", getusername());
+			if ((rename(temppath, path)) != 0)
+			{
+				printf("Error copying temp file.\n");
+				fclose(liststemp);
+				exit(1);
+			}
+			printf("Successfully deleted list \"%s\"\n", list);
+			break;
+	}
+
+}
+
 // Set default command //
 void D(char *arg)
 {
