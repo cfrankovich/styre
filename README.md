@@ -4,5 +4,4 @@ Styre is a command line tool used to manage ideas, projects, todo lists, and any
 ## Wiki
 For installation, documentation, and more please visit the [wiki](https://github.com/cfrankovich/styre/wiki).
 
-<br></br>
 <img src="https://i.imgur.com/WdUQMfQ.gif" width="40%" height="40%"></img>
