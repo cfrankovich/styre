@@ -22,11 +22,9 @@ void X(char *arg)
 	}
 	fclose(listfile);
 
-
-	// New Code - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-
 	FILE *fp, *tfp;
 	int iter;
+	char lookinfor[260];
 
 	if (cse == 1)
 	{
@@ -37,23 +35,50 @@ void X(char *arg)
 			exit(1);
 		}
 
-		sprintf(path, "/home/%s/.styre/lists", getusername());
-		fp = fopen(path, "r");
 		sprintf(path, "/home/%s/.styre/lists.tmp", getusername());
 		tfp = fopen(path, "a");
-		
-		/*j
-		iter = 2;
-		// first line is buggy idk //	
-		while ((line = fgetline(fp, iter)) != NULL)
-		{
-
-		}
-		*/
-
+		sprintf(path, "/home/%s/.styre/lists", getusername());
+		fp = fopen(path, "r");
+		strcpy(lookinfor, list);
+	}
+	else if (cse == 2 || cse == 3)
+	{
+		sprintf(path, "/home/%s/.styre/Lists/%s.tmp", getusername(), list);
+		tfp = fopen(path, "a");
+		sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), list);
+		fp = fopen(path, "r");
+		if (cse == 2) sprintf(lookinfor, "+%s", sub);
+		else sprintf(lookinfor, "-%s", entry);
 	}
 
-	// End New Code - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+	// First line always buggin //
+	bool found;
+	found = false;
+	
+	line = fgetline(fp, 1);
+	if (strcmp(line+1, lookinfor) == 0) found = true;
+	else fprintf(tfp, "%s\n", line+1);
+
+	iter = 2;
+	while ((line = fgetline(fp, iter)) != NULL)
+	{
+		if (!found && strcmp(line, lookinfor) == 0) found = true; 
+		else fprintf(tfp, "%s\n", line);
+		++iter;
+	}
+	fclose(tfp);
+	fclose(fp);
+
+	char temppath[260];
+	sprintf(temppath, "%s.tmp", path);
+
+	if ((rename(temppath, path)) != 0)
+	{
+		printf("Error copying temp file\n");
+		exit(1);
+	}
+
+	if (!found) printf("No deletions have occured\n");
 
 }
 
