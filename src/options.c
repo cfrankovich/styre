@@ -9,6 +9,67 @@
 
 #include "declare.h"
 
+// Rename Something //
+void R(char *arg)
+{
+	char *newname = "newnamelol";
+	char *list, *sub, *entry;
+	list = styresplit(arg, 1);
+	sub = styresplit(arg, 2);
+	entry = styresplit(arg, 3);
+	int cse;
+	cse = (sub != NULL) ? ((entry != NULL) ? 3 : 2) : 1;
+	
+	char path[264];
+	FILE *listfile;
+	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), list);
+	if ((listfile = fopen(path, "r")) == NULL)
+	{
+		printf("List \"%s\" does not exist\n", list);	
+		exit(1);
+	}
+
+	if (cse == 1)
+	{
+		fclose(listfile);
+		// simply just move list and rename list
+		char newpath[264];
+		sprintf(newpath, "/home/%s/.styre/Lists/%s", getusername(), newname); 
+		if ((rename(path, newpath)) != 0)
+		{
+			printf("Error renaming list file\n");
+			exit(1);
+		}
+
+		sprintf(path, "/home/%s/.styre/lists", getusername());
+		sprintf(newpath, "/home/%s/.styre/lists.tmp", getusername());
+		listfile = fopen(path, "r");
+		FILE *templistfile;
+		templistfile = fopen(newpath, "a");
+
+		char *line;
+		int iter;
+		iter = 1;
+		while((line = fgetline(listfile, iter)) != NULL)
+		{
+			if (strcmp(line, list) == 0) { fprintf(templistfile, "%s\n", newname); }
+			else { fprintf(templistfile, "%s\n", line); }	
+			++iter;
+		}
+		fclose(listfile);
+		fclose(templistfile);
+		if ((rename(newpath, path)) != 0)
+		{
+			printf("Error copying temp file\n");
+			exit(1);
+		}
+
+			
+	}
+
+
+}
+
 // Remove Something //
 void X(char *arg)
 {
@@ -32,7 +93,7 @@ void X(char *arg)
 
 	FILE *fp, *tfp;
 	int iter;
-	char lookinfor[260];
+	char lookinfor[264];
 
 	if (cse == 1)
 	{
@@ -115,7 +176,7 @@ void D(char *arg)
 	}
 
 	fclose(configfile);
-	char temppath[260], path[260];
+	char temppath[264], path[264];
 	sprintf(path, "/home/%s/.styre/config", getusername());
 	sprintf(temppath, "/home/%s/.styre/config.temp", getusername());
 	if ((rename(temppath, path)) != 0)
@@ -153,7 +214,7 @@ void G(char* arg)
 	}
 
 	fclose(configfile);
-	char temppath[260], path[260];
+	char temppath[264], path[264];
 	sprintf(path, "/home/%s/.styre/config", getusername());
 	sprintf(temppath, "/home/%s/.styre/config.temp", getusername());
 	if ((rename(temppath, path)) != 0)
@@ -181,7 +242,7 @@ void L(char* arg)
 	fprintf(file, "%s\n", arg);
 	fclose(file);
 	
-	char path[260];
+	char path[264];
 	char *uname;
 	FILE *newlistfile;
 	uname = getusername();	
@@ -206,7 +267,7 @@ void S(char* arg)
 		exit(1);
 	}
 
-	char path[260];
+	char path[264];
 	char *uname;
 	FILE *listfile;
 
@@ -336,7 +397,7 @@ void l()
 void s(char *arg)
 {
 	FILE *listfile;
-	char path[260], *line;
+	char path[264], *line;
 	int iter;
 
 	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), arg);
@@ -362,7 +423,7 @@ void s(char *arg)
 // List subsecs of a list //
 void e(char* arg)
 {
-	char *line, *subname, path[260];
+	char *line, *subname, path[264];
 	subname = styresplit(arg, 2);
 	sprintf(path, "/home/%s/.styre/Lists/%s", getusername(), styresplit(arg, 1));
 

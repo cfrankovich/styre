@@ -27,6 +27,10 @@ void parseargs(int *c, char* arg)
 {
 	switch(*c) 
 	{
+		case 'R':
+			R(arg);
+			break;
+
 		case 'L':
 			L(arg);
 			break;

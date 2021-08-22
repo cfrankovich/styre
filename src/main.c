@@ -7,7 +7,7 @@
 #include "declare.h"
 
 #define MAX_ARG_LEN 100
-#define OPT_LIST "e:s:lgX:D:L:S:E:G:?"
+#define OPT_LIST "e:s:lgX:D:L:S:E:G:R:?"
 
 int main(int argc, char **argv)
 {
@@ -29,8 +29,7 @@ int main(int argc, char **argv)
 			if (ptr[0] == '-')
 			{
 				int c;
-				c = ptr[1];
-				ptr = strtok(NULL, " "); 
+				c = ptr[1]; ptr = strtok(NULL, " "); 
 				parseargs(&c, ptr); 
 			}
 			else
