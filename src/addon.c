@@ -23,12 +23,12 @@ FILE* getstyrefile(char* filename, char* mode)
 	return fp; 
 }
 
-void parseargs(int *c, char* arg)
+void parseargs(int *c, char* arg, char **argv)
 {
 	switch(*c) 
 	{
 		case 'R':
-			R(arg);
+			R(arg, argv[3]);
 			break;
 
 		case 'L':

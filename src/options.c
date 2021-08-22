@@ -10,9 +10,8 @@
 #include "declare.h"
 
 // Rename Something //
-void R(char *arg)
+void R(char *arg, char *newname)
 {
-	char *newname = "newnamelol";
 	char *list, *sub, *entry;
 	list = styresplit(arg, 1);
 	sub = styresplit(arg, 2);
@@ -64,7 +63,8 @@ void R(char *arg)
 			exit(1);
 		}
 
-			
+		
+		printf("Successfully renamed list\n");
 	}
 
 

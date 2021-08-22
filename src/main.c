@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 			{
 				int c;
 				c = ptr[1]; ptr = strtok(NULL, " "); 
-				parseargs(&c, ptr); 
+				parseargs(&c, ptr, argv); 
 			}
 			else
 			{
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	int c;
 	while ((c = getopt(argc, argv, OPT_LIST)) != -1)
 	{ 
-		parseargs(&c, optarg);
+		parseargs(&c, optarg, argv);
 	}
 	
 	return 0;

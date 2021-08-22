@@ -2,14 +2,14 @@
 #define DECLARE_HEADER
 
 FILE* getstyrefile(char* filepath, char* mode);
-void parseargs(int *c, char *arg);
+void parseargs(int *c, char *arg, char **argv);
 char* fgetline(FILE *fp, int line);
 char* ffindline(FILE *fp, char *text, int *linenumber);
 char* getinsidequotes(char *text);
 char* getusername();
 char* styresplit(char *text, int sec);
 
-void R(char *arg);
+void R(char *arg, char *newname);
 void X(char *arg);
 void D(char *arg);
 void e(char *arg);
