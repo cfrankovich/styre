@@ -73,11 +73,11 @@ char* fgetline(FILE *fp, int line)
 {
 	int maxlen = 128;
 	char *buffer = malloc(sizeof(char) * maxlen);
-	char ch = getc(fp);
 	int count, lcount;
 	count = lcount = 0;
 	
-	rewind(fp);
+	fseek(fp, 0, SEEK_SET);
+	char ch = getc(fp);
 	while (ch != EOF)
 	{
 		if (ch == '\n')
