@@ -1,10 +1,19 @@
-main = src/main.c
-compiled = src/main.o
+CC = gcc
+CFLAGS = -Wall -g -c
 
-output: $(compiled) 
-	gcc $(compiled) -o styre
-	rm src/*.o  
+all: program
 
-$(compiled): $(main) 
-	gcc -c $(main) -o $(compiled) 
+program: src/main.o src/addon.o src/options.o 
+	$(CC) -g -o styre src/main.o src/addon.o src/options.o
 
+src/addon.o: src/addon.c
+	$(CC) $(CFLAGS) -o src/addon.o src/addon.c
+
+src/options.o: src/options.c
+	$(CC) $(CFLAGS) -o src/options.o src/options.c
+
+src/main.o: src/main.c
+	$(CC) $(CFLAGS) -o src/main.o src/main.c
+
+clean:
+	rm -f src/*.o
