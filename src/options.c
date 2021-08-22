@@ -1,6 +1,14 @@
 #ifndef OPTION_HEADER
 #define OPTION_HEADER
 
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "declare.h"
+
 // Remove Something //
 void X(char *arg)
 {
@@ -69,7 +77,7 @@ void X(char *arg)
 	fclose(tfp);
 	fclose(fp);
 
-	char temppath[260];
+	char temppath[264];
 	sprintf(temppath, "%s.tmp", path);
 
 	if ((rename(temppath, path)) != 0)
@@ -249,7 +257,7 @@ void E(char* arg)
 		}
 
 		// Need to find a better way than this //
-		char temppath[260], *line;
+		char temppath[264], *line;
 		FILE *tempfile;
 		int iter;
 		sprintf(temppath, "%s.tmp", path);

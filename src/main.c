@@ -5,8 +5,6 @@
 #include <stdbool.h>
 
 #include "declare.h"
-#include "addon.h"
-#include "options.h"
 
 #define MAX_ARG_LEN 100
 #define OPT_LIST "e:s:lgX:D:L:S:E:G:?"

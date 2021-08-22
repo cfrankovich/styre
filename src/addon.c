@@ -1,5 +1,11 @@
 #ifndef HELPER_HEADER
 #define HELPER_HEADER
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "declare.h"
 
 FILE* getstyrefile(char* filename, char* mode)
 {
@@ -113,10 +119,9 @@ char* fgetline(FILE *fp, int line)
 
 char* ffindline(FILE *fp, char *text, int *num)
 {
-	int k, m, len;
+	int k, len;
 	len = strlen(text);
 	char *line, comp[len+1];
-	m = 0;
 	*num = 1;
 	while ((line = fgetline(fp, *num)) != NULL)
 	{
